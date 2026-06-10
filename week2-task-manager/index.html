@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Task Manager</title>
+  <!-- Google Fonts: Inter for elegant typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Styles stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- FontAwesome for standard icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container" id="app">
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="header-logo">
+        <i class="fa-solid fa-list-check logo-icon"></i>
+        <h1>TaskCraft</h1>
+      </div>
+      <div class="header-actions">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="icon-btn" title="Toggle Dark Mode" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="app-main">
+      <!-- Sidebar / Insights Section -->
+      <section class="insights-panel" id="insights">
+        <div class="card stats-card">
+          <h2>Task Analytics</h2>
+          <div class="progress-container">
+            <div class="progress-bar-bg">
+              <div id="completion-progress" class="progress-bar-fill" style="width: 0%"></div>
+            </div>
+            <div class="progress-labels">
+              <span id="progress-percent">0% Completed</span>
+              <span id="progress-ratio">0/0 Tasks</span>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-value text-primary" id="total-stats-count">0</span>
+              <span class="stat-label">Total</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value text-warn" id="active-stats-count">0</span>
+              <span class="stat-label">Active</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value text-success" id="completed-stats-count">0</span>
+              <span class="stat-label">Done</span>
+            </div>
+          </div>
+          
+          <div class="priority-breakdown">
+            <h3>Priority Distribution</h3>
+            <div class="priority-chart">
+              <div class="chart-bar-container">
+                <div class="chart-bar-label">High</div>
+                <div class="chart-bar-wrapper">
+                  <div id="bar-high" class="chart-bar-fill high-fill" style="width: 0%"></div>
+                </div>
+                <span id="count-high">0</span>
+              </div>
+              <div class="chart-bar-container">
+                <div class="chart-bar-label">Med</div>
+                <div class="chart-bar-wrapper">
+                  <div id="bar-medium" class="chart-bar-fill medium-fill" style="width: 0%"></div>
+                </div>
+                <span id="count-medium">0</span>
+              </div>
+              <div class="chart-bar-container">
+                <div class="chart-bar-label">Low</div>
+                <div class="chart-bar-wrapper">
+                  <div id="bar-low" class="chart-bar-fill low-fill" style="width: 0%"></div>
+                </div>
+                <span id="count-low">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card tags-card">
+          <h2>Categories</h2>
+          <div class="category-filters" id="category-filter-container">
+            <button class="category-pill active" data-category="all">
+              <span class="category-color all-color"></span> All
+            </button>
+            <button class="category-pill" data-category="Work">
+              <span class="category-color work-color"></span> Work
+            </button>
+            <button class="category-pill" data-category="Personal">
+              <span class="category-color personal-color"></span> Personal
+            </button>
+            <button class="category-pill" data-category="Shopping">
+              <span class="category-color shopping-color"></span> Shopping
+            </button>
+            <button class="category-pill" data-category="Health">
+              <span class="category-color health-color"></span> Health
+            </button>
+          </div>
+        </div>
+
+        <!-- Mini Help / Instruction Card -->
+        <div class="card help-card">
+          <h3>Quick Tips</h3>
+          <ul>
+            <li>Double-click any task title to edit.</li>
+            <li>Drag &amp; drop tasks to change priority.</li>
+            <li>Press <kbd>Ctrl</kbd> + <kbd>/</kbd> to focus input.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Task Manager Panel -->
+      <section class="tasks-panel">
+        <!-- New Task Form -->
+        <form class="card task-form" id="task-creation-form">
+          <div class="form-row">
+            <input 
+              type="text" 
+              id="task-title-input" 
+              placeholder="What needs to be done?" 
+              required 
+              autocomplete="off"
+            >
+            <button type="submit" class="primary-btn" id="add-task-btn">
+              <i class="fa-solid fa-plus"></i> Add Task
+            </button>
+          </div>
+          
+          <div class="form-advanced-controls">
+            <div class="control-group">
+              <label for="task-priority-select">Priority</label>
+              <select id="task-priority-select">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            
+            <div class="control-group">
+              <label for="task-category-select">Category</label>
+              <select id="task-category-select">
+                <option value="Work">Work</option>
+                <option value="Personal" selected>Personal</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Health">Health</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label for="task-due-date">Due Date</label>
+              <input type="date" id="task-due-date">
+            </div>
+          </div>
+        </form>
+
+        <!-- Tasks Feed Filtering and Search -->
+        <div class="feed-controls card">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="search-tasks-input" placeholder="Search tasks...">
+          </div>
+          
+          <div class="filter-tabs" id="status-filter-tabs">
+            <button class="tab-btn active" data-filter="all">All</button>
+            <button class="tab-btn" data-filter="active">Active</button>
+            <button class="tab-btn" data-filter="completed">Completed</button>
+          </div>
+
+          <div class="sorting-controls">
+            <select id="sort-tasks-select">
+              <option value="custom" selected>My Order (Drag)</option>
+              <option value="due-asc">Due Date (Soonest)</option>
+              <option value="priority-desc">Priority (High-Low)</option>
+              <option value="title-asc">Alphabetical</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Task List Container -->
+        <div class="task-list-wrapper">
+          <ul class="task-list" id="tasks-list-container">
+            <!-- Dynamically populated via Vanilla JavaScript -->
+          </ul>
+          
+          <!-- Empty State -->
+          <div class="empty-state" id="empty-state-view">
+            <div class="empty-icon-wrapper">
+              <i class="fa-solid fa-clipboard-list"></i>
+            </div>
+            <h3>No tasks found</h3>
+            <p>Ready to start? Create a task or adjust your active filters!</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Description -->
+    <footer class="app-footer">
+      <p>&copy; 2026 TaskCraft Task Manager. Built with semantic HTML5, modern CSS3, and modern Vanilla JavaScript.</p>
+    </footer>
+  </div>
+
+  <!-- Main scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

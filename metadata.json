@@ -1,0 +1,6 @@
+{
+  "name": "Interactive Task Manager",
+  "description": "An elegant and interactive task manager with CRUD operations, drag-and-drop sorting, filtering, statistics, and sub-task management. Includes a Developer Export panel for copying vanilla HTML/CSS/JS source files.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
